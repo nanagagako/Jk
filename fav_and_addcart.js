@@ -1,8 +1,9 @@
 /*
-cron:1 1 1 1 *
 
-即时任务，无需cron
+1 1 1 1 * fav_and_addcart.js, tag=自动车-联合关注+加购+分享领豆, enabled=true
+
 */
+
 const $ = new Env('自动车-联合关注+加购+分享领豆');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
