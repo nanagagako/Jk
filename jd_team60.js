@@ -7,13 +7,13 @@
  * @param num 跑多少ck
  * @param againUserIndex 需要重新跑的ck
  * @returns {Promise<unknown>}
-1 1 1 1 * jd_wdz.js
+1 1 1 1 * jd_team60.js, tag=MM微定制, enabled=true
  */
 
 function openCardActivity(activityId, activityUrl, pin, num, againUserIndex) {
   return new Promise((resolve) => {
     const prefix = activityUrl.includes("cjhydz") ? "cjhydz" : "lzkjdz";
-    const $ = new Env("微定制瓜分通用");
+    const $ = new Env("MM微定制");
     const notify = $.isNode() ? require("./sendNotify") : "";
     const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
     let cookiesArr = [],
