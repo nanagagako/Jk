@@ -1,11 +1,11 @@
 /*
-#女装盲盒抽京豆任务，自行加入一下环境变量
+#M女装盲盒，自行加入一下环境变量
 export jd_nzmhurl="https://anmp.jd.com/babelDiy/Zeus/2x36jyruNVDWxUiAiGAgHRrkqVX2/index.html"
 
-cron 35 1,23 * * *
+1 1 1 1 * jd_nzmh.js, tag=M女装盲盒, enabled=true
  */
 
-const $ = new Env('女装盲盒抽京豆');
+const $ = new Env('M女装盲盒');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
