@@ -21,7 +21,7 @@ cron:10 10 10 10 *
 
 */
 
-const $ = new Env('入会开卡领取礼包通用');
+const $ = new Env('M入会豆豆');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
