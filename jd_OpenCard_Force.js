@@ -7,7 +7,7 @@
 脚本大部分内容包括加密部分代码提取自 smiek2121 的开卡脚本
 
 变量：
-## 入会开卡
+## M入会豆豆
 //export VENDER_ID=""
 ## 最小入会值 （默认10）
 //export OPENCARD_BEAN=""
@@ -15,7 +15,7 @@
 cron:10 10 10 10 *
 ============Quantumultx===============
 [task_local]
-#入会开卡领取礼包(通用)
+#M入会豆豆(通用)
 1 1 1 1 * jd_OpenCard_Force.js, tag=入会开卡领取礼包(通用), enabled=true
 
 
