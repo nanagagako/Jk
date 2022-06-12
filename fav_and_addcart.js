@@ -1,8 +1,4 @@
 /*
-甘露殿-https://t.me/jdredrain
-
-自动车监控脚本-联合关注+加购+分享领豆
-https://raw.githubusercontent.com/msechen/jdrain/main/fav_and_addcart.js
 cron:1 1 1 1 *
 
 即时任务，无需cron
