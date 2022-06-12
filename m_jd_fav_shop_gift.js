@@ -1,3 +1,9 @@
+/*
+
+1 1 1 1 * m_jd_fav_shop_gift.js, tag=M收藏有礼, enabled=true
+
+*/
+
 let mode = __dirname.includes('magic')
 const { Env } = mode ? require('../magic') : require('./magic')
 const $ = new Env('M收藏有礼');
