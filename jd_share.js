@@ -1,20 +1,18 @@
 /* 
-甘露殿-https://t.me/jdredrain
-
-自动车监控脚本-分享有礼
-https://raw.githubusercontent.com/msechen/jdrain/main/jd_share.js
 
 环境变量
 ownCookieNum 需要助力数量，默认4个
 SHARE_ACTIVITY_ID活动id
 
 作者：小埋h ttps://t.me/okyydsnb
-7 7 7 7 7
+
+1 1 1 1 * jd_share.js, tag=M分享有礼, enabled=true
+
 注意控制ck数量
 
 即时任务，无需cron
 */
-const $ = new Env("自动车-分享有礼");
+const $ = new Env("M分享有礼");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
