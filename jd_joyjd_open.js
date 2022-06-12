@@ -6,7 +6,7 @@ export comm_tasknameList="京东工业品抽奖"
 cron:1 1 1 1 *
 即时任务，无需cron,短期或者长期请参考活动规则设置cron
 */
-const $ = new Env('jd_joyjd_open通用ID任务');
+const $ = new Env('joy通用ID任务');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];
