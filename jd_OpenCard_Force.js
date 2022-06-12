@@ -15,7 +15,7 @@
 ============Quantumultx===============
 [task_local]
 #M入会豆豆(通用)
-1 1 1 1 * jd_OpenCard_Force.js, tag=入会开卡领取礼包(通用), enabled=true
+1 1 1 1 * jd_OpenCard_Force.js, tag=M入会豆豆(通用), enabled=true
 
 
 */
