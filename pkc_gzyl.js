@@ -21,7 +21,7 @@ https://git.metauniverse-cn.com/https://raw.githubusercontent.com/curtinlv/gd/ma
 
 [task_local]
 #获取body后执行
-10 10 * * * https://git.metauniverse-cn.com/https://raw.githubusercontent.com/curtinlv/gd/main/jk_script/pkc_gzyl.js, tag=PKC-关注有礼, enabled=false
+1 1 1 1 * https://git.metauniverse-cn.com/https://raw.githubusercontent.com/curtinlv/gd/main/jk_script/pkc_gzyl.js, tag=PKC-关注有礼, enabled=false
 
 
 
