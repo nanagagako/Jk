@@ -3,7 +3,7 @@
 #盲盒任务抽京豆，自行加入以下环境变量，多个活动用@连接
 export jd_mhurlList=""
 
-1 1 1 1 * jd_mhtask.js, tag=电脑配件, enabled=true
+1 1 1 1 * jd_mhtask.js, tag=M盲盒京豆, enabled=true
 
  */
 
