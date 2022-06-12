@@ -1,11 +1,13 @@
 /*
+
 #盲盒任务抽京豆，自行加入以下环境变量，多个活动用@连接
 export jd_mhurlList=""
 
-即时任务，无需cron
+1 1 1 1 * jd_mhtask.js, tag=电脑配件, enabled=true
+
  */
 
-const $ = new Env('盲盒任务抽京豆');
+const $ = new Env('M盲盒京豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
