@@ -1,5 +1,5 @@
 /*
-1 1 1 1 * jd_wxSecond.js, tag=读秒拼手速通用活动, enabled=true
+1 1 1 1 * m_jd_wx_collectCard.js, tag=M集卡抽奖, enabled=true
 */
 
 //问题反馈:https://t.me/Wall_E_Channel
