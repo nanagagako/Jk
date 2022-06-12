@@ -1,3 +1,9 @@
+/*
+
+1 1 1 1 * m_jd_wx_luckDraw.js, tag=M幸运抽奖, enabled=true
+
+*/
+
 //问题反馈:https://t.me/Wall_E_Channel
 let mode = __dirname.includes('magic')
 const {Env} = mode ? require('./magic') : require('./magic')
