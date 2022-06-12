@@ -1,9 +1,10 @@
-/**
-关注有礼
-*/
-// */10 * * * * jd_dd_follow_c.js
+/*
 
-const $ = new Env('关注有礼');
+1 1 1 1 * jd_dd_follow_c.js, tag=M关注有礼, enabled=true
+
+*/
+
+const $ = new Env('M关注有礼');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
