@@ -27,7 +27,7 @@ https://git.metauniverse-cn.com/https://raw.githubusercontent.com/curtinlv/gd/ma
 
 
 */
-const $ = new Env('PKC关注有礼-特效');
+const $ = new Env('PKC关注有礼特效');
 let cookiesArr = [], cookie = '',  notify,  allMessage = '' ;
 const logs = 0; // 0为关闭日志，1为开启
 $.message = '';
