@@ -1,11 +1,13 @@
 /*
 
+1 1 1 1 * jd_dphy.js, tag=M店铺会员, enabled=true
+
 使用环境变量 jrhy_id 提供 jrhy_id，多个用&连接
 脚本大部分内容包括加密部分代码提取自 smiek2121 的开卡脚本
 
 */
 
-const $ = new Env('入会开卡领取礼包通用');
+const $ = new Env('M店铺会员');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
