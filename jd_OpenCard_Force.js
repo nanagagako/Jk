@@ -12,7 +12,6 @@
 ## 最小入会值 （默认10）
 //export OPENCARD_BEAN=""
 
-cron:10 10 10 10 *
 ============Quantumultx===============
 [task_local]
 #M入会豆豆(通用)
