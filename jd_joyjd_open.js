@@ -3,7 +3,7 @@
 export comm_activityIDList="af2b3d56e22d43afa0c50622c45ca2a3"  
 export comm_endTimeList="1639756800000"
 export comm_tasknameList="京东工业品抽奖"
-1 1 1 1 * jd_joyjd_open.js
+cron:1 1 1 1 *
 即时任务，无需cron,短期或者长期请参考活动规则设置cron
 */
 const $ = new Env('jd_joyjd_open通用ID任务');
