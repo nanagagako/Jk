@@ -7,13 +7,13 @@
  * @param num 跑多少ck
  * @param againUserIndex 需要重新跑的ck
  * @returns {Promise<unknown>}
-1 1 1 1 * jd_team60.js, tag=MM微定制, enabled=true
+1 1 1 1 * jd_wdz.js
  */
 
 function openCardActivity(activityId, activityUrl, pin, num, againUserIndex) {
   return new Promise((resolve) => {
     const prefix = activityUrl.includes("cjhydz") ? "cjhydz" : "lzkjdz";
-    const $ = new Env("MM微定制");
+    const $ = new Env("微定制瓜分通用");
     const notify = $.isNode() ? require("./sendNotify") : "";
     const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
     let cookiesArr = [],
@@ -325,7 +325,7 @@ function openCardActivity(activityId, activityUrl, pin, num, againUserIndex) {
             JSON.stringify(body)
           )}&client=H5&clientVersion=9.2.0&uuid=8888&jsonp=jsonp_${Date.now()}_${String(
             Math.random()
-          ).slice(3, 8)}&h5st=20220412164645241%3B3634d1aeada6d9cd11a7526a3a6ac63e%3B169f1%3Btk02wd66f1d7418nXuLjsmO3oJMCxUqKVwIf4q1WRptKRT3nJSrx01oYYBAylbSuyg4sipnEzyEJOZuFjfG2QERcBtzd%3B6b455234e93be4ec963cd7c575d70882b838ba588149a1f54b69c8d0dacf14da%3B3.0%3B1649753205241`;
+          ).slice(3, 8)}&h5st=20220614102046318%3B7327310984571307%3Bef79a%3Btk02wa31b1c7718neoZNHBp75rw4pE%2Fw7fXko2SdFCd1vIeWy005pEHdm0lw2CimWpaw3qc9il8r9xVLHp%2Bhzmo%2B4swg%3Bdd9526fc08234276b392435c8623f4a737e07d4503fab90bf2cd98d2a3a778ac%3B3.0%3B1655173246318`;
           let referer = `${openCardLink}&returnUrl=${encodeURIComponent(
             `https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index?activityId=${activityId}&adsource=cjhdc&isOpenCardBack=iocb`
           )}`;
@@ -343,7 +343,7 @@ function openCardActivity(activityId, activityUrl, pin, num, againUserIndex) {
             })
           )}&client=H5&clientVersion=9.2.0&uuid=88888&jsonp=jsonp_${Date.now()}_${String(
             Math.random()
-          ).slice(3, 8)}&h5st=20220412164645241%3B3634d1aeada6d9cd11a7526a3a6ac63e%3B169f1%3Btk02wd66f1d7418nXuLjsmO3oJMCxUqKVwIf4q1WRptKRT3nJSrx01oYYBAylbSuyg4sipnEzyEJOZuFjfG2QERcBtzd%3B6b455234e93be4ec963cd7c575d70882b838ba588149a1f54b69c8d0dacf14da%3B3.0%3B1649753205241`;
+          ).slice(3, 8)}&h5st=20220614102046318%3B7327310984571307%3Bef79a%3Btk02wa31b1c7718neoZNHBp75rw4pE%2Fw7fXko2SdFCd1vIeWy005pEHdm0lw2CimWpaw3qc9il8r9xVLHp%2Bhzmo%2B4swg%3Bdd9526fc08234276b392435c8623f4a737e07d4503fab90bf2cd98d2a3a778ac%3B3.0%3B1655173246318`;
           let referer = `https://shopmember.m.jd.com/shopcard/?venderId=${
             $.userId
           }&shopId=${$.userId}&channel=${
