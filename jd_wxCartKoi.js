@@ -31,10 +31,6 @@ cron:1 1 1 1 *
 活动网址：
 //https://lzkjdz-isv.isvjcloud.com/wxCartKoi/cartkoi/activity?activityId=xxxxxxx
 
-cron:1 1 1 1 *
-============Quantumultx===============
-[task_local]
-#购物车锦鲤通用活动
 
 */
 
