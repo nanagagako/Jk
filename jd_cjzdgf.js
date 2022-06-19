@@ -5,7 +5,9 @@ jd_cjhy_activityId  活动ID 必需
 jd_cjhy_activityUrl 活动地址 必需
 
 #CJ组队瓜分京豆
-1 1 1 1 *jd_cjzdgf.js, tag=CJ组队瓜分京豆, enabled=true
+
+1 1 1 1 * jd_cjzdgf.js, tag=CJ组队瓜分京豆, enabled=true
+
 
 Fix by HarbourJ, 2022.06.15
 TG: https://t.me/HarbourToulu
