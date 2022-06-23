@@ -2,6 +2,8 @@
 # 17:/椋东送福利，邀请好友，争排行榜排位，大礼送不停，(E1Y7RAtC4b) ，升级新版猄·=·Dσσōngαpρ
 # https://prodev.m.jd.com/mall/active/dVF7gQUVKyUcuSsVhuya5d2XD4F/index.html?code=7cfd02e34d6d41028286d6a95cdeea7e&invitePin=jd_5a2bee883014b
 # 注意事项 pin 为助力pin 必须保证ck在里面
+# 1 1 1 1 * jd_hyydl.py, tag=邀好友赢大礼, enabled=true
+
 
 import json
 import requests,random,time,asyncio,re,os
@@ -10,8 +12,8 @@ from functools import partial
 print = partial(print, flush=True)
 
 activatyname = '邀请赢大礼'
-activityId = 'dVF7gQUVKyUcuSsVhuya5d2XD4F'   # 活动类型
-authorCode = '16dde1860f1b4f1b9a93db6612abf0b9' # 活动id
+activityId = ''   # 活动类型
+authorCode = '' # 活动id
 invitePin = '' # pin 填写cookie后面的pin
 activityUrl = f'https://prodev.m.jd.com/mall/active/{activityId}/index.html?code={authorCode}&invitePin={invitePin}'
 
