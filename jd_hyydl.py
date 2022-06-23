@@ -1,9 +1,18 @@
+"""
 # 邀好友赢大礼 create by doubi 通用模板 
 # 17:/椋东送福利，邀请好友，争排行榜排位，大礼送不停，(E1Y7RAtC4b) ，升级新版猄·=·Dσσōngαpρ
-# https://prodev.m.jd.com/mall/active/dVF7gQUVKyUcuSsVhuya5d2XD4F/index.html?code=7cfd02e34d6d41028286d6a95cdeea7e&invitePin=jd_5a2bee883014b
+# https://prodev.m.jd.com/mall/active/dVF7gQUVKyUcuSsVhuya5d2XD4F/index.html?code=16dde1860f1b4f1b9a93db6612abf0b9&invitePin=pin值
 # 注意事项 pin 为助力pin 必须保证ck在里面
-# 1 1 1 1 * jd_hyydl.py, tag=邀好友赢大礼, enabled=true
 
+
+环境变量说明：
+export yhypin="需要助力的pin值"  
+export yhyactivityId="活动类型ID"
+export yhyauthorCode="活动ID"
+
+cron: 6 6 6 6 *
+new Env('邀请赢大礼');
+"""
 
 import json
 import requests,random,time,asyncio,re,os
@@ -12,9 +21,9 @@ from functools import partial
 print = partial(print, flush=True)
 
 activatyname = '邀请赢大礼'
-activityId = ''   # 活动类型
-authorCode = '' # 活动id
-invitePin = '' # pin 填写cookie后面的pin
+activityId = os.environ["yhyactivityId"]   # 活动类型
+authorCode = os.environ["yhyauthorCode"] # 活动id
+invitePin = os.environ["yhypin"] # pin 填写cookie后面的pin
 activityUrl = f'https://prodev.m.jd.com/mall/active/{activityId}/index.html?code={authorCode}&invitePin={invitePin}'
 
 # 随机ua
@@ -139,7 +148,7 @@ async def check_ruhui(body,cookie,venderId,ua):
         'Referer': f'https://shopmember.m.jd.com/shopcard/?venderId={venderId}&channel=801&returnUrl={json.dumps(activityUrl)}',
         'Accept-Encoding': 'gzip, deflate'
     }
-    response = requests.get(url=url,headers=headers,timeout=5).text
+    response = requests.get(url=url,headers=headers,timeout=30000).text
     return json.loads(response)
 
 # 领取奖励
