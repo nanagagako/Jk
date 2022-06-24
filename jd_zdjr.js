@@ -7,7 +7,9 @@ jd_zdjr_activityUrl 活动地址 必需
 需要配合重写获取=>活动id、活动地址
 https://\w+-isv.isvjcloud.com/wxTeam/shopInfo url script-request-body jd_zdjr.js
 mitm
-1 1 1 1 1 1 jd_zdjr.js
+
+1 1 1 1 * jd_zdjr.js, tag=ZD组队瓜分京豆, enabled=true
+
 *-isv.isvjcloud.com
 
 Fix by HarbourJ, 2022.06.15
@@ -20,7 +22,7 @@ TG: https://t.me/HarbourToulu
 let jd_zdjr_activityId = '0c50cfa7551e475d93ae4c3ad612dbcb'// 活动ID
 let jd_zdjr_activityUrl = 'https://lzkjdz-isv.isvjcloud.com'// 活动地址
 
-const $=new Env('LZ组队瓜分京豆');
+const $=new Env('ZD组队瓜分京豆');
 const notify=$.isNode()?require('./sendNotify'):'';
 const jdCookieNode=$.isNode()?require('./jdCookie.js'):'';
 let cookiesArr=[],cookie='',message='',messageTitle='';
