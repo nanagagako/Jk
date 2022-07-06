@@ -1,38 +1,30 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-File: jd_inviteFriendsGift.py(邀好友赢大礼)
-Author: Fix by HarbourJ from doubi
-Date: 2022/7/6 23:26
-TG: https://t.me/HarbourToulu
-cron: 1 1 1 1 1 *
-new Env('邀好友赢大礼');
-活动入口：https://prodev.m.jd.com/mall/active/dVF7gQUVKyUcuSsVhuya5d2XD4F/index.html?code=xxxxxxxx&invitePin=xxxxxx
-修改记录: 增加从环境变量中获取authorCode变量，增加对青龙desi JD_COOKIE的适配。
-变量格式: export jd_inv_authorCode="6b84e047a9154d909febd19d3120aad2"
+# 邀好友赢大礼 create by doubi 通用模板 
+# 17:/椋东送福利，邀请好友，争排行榜排位，大礼送不停，(E1Y7RAtC4b) ，升级新版猄·=·Dσσōngαpρ
+# https://prodev.m.jd.com/mall/active/dVF7gQUVKyUcuSsVhuya5d2XD4F/index.html?code=16dde1860f1b4f1b9a93db6612abf0b9&invitePin=pin值
+# 注意事项 pin 为助力pin 必须保证ck在里面
+
+
+环境变量说明：
+export yhypin="需要助力的pin值"  
+export yhyactivityId="活动类型ID"
+export yhyauthorCode="活动ID"
+
+cron: 1 1 1 1 *
+new Env('邀请赢大礼');
 """
 
 import json
-import requests, random, time, asyncio, re, os, sys
-from urllib.parse import quote_plus, unquote_plus
+import requests,random,time,asyncio,re,os
+from urllib.parse import quote_plus,unquote_plus
 from functools import partial
-
-try:
-    from jdCookie import get_cookies
-    getCk = get_cookies()
-except:
-    print("请先下载依赖脚本，\n下载链接：https://raw.githubusercontent.com/HarbourJ/HarbourToulu/main/JDCookie.py")
-    sys.exit(3)
 print = partial(print, flush=True)
+
 activatyname = '邀请赢大礼'
-activityId = 'dVF7gQUVKyUcuSsVhuya5d2XD4F'  # 活动类型
-try:
-    if os.environ.get("jd_inv_authorCode"):
-        authorCode = os.environ["jd_inv_authorCode"]  # 活动id
-    else:
-        authorCode = "6b84e047a9154d909febd19d3120aad2"
-except:
-    print("未在环境变量中获取到有效jd_inv_authorCode变量，请添加变量后重试！")
+activityId = os.environ["yhyactivityId"]   # 活动类型
+authorCode = os.environ["yhyauthorCode"] # 活动id
+invitePin = os.environ["yhypin"] # pin 填写cookie后面的pin
+activityUrl = f'https://prodev.m.jd.com/mall/active/{activityId}/index.html?code={authorCode}&invitePin={invitePin}'
 
 # 随机ua
 def randomuserAgent():
@@ -72,7 +64,7 @@ async def check(ua, ck):
             "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
             "Accept-Encoding": "gzip, deflate",
         }
-        result = requests.get(url=url, headers=header, timeout=None).text
+        result = requests.get(url=url, headers=header, timeout=2).text
         codestate = json.loads(result)
         if codestate['retcode'] == '1001':
             msg = "当前ck已失效，请检查"
@@ -85,46 +77,47 @@ async def check(ua, ck):
 
 # 获取当前时间
 def get_time():
-    time_now = round(time.time() * 1000)
+    time_now = round(time.time()*1000)
     return time_now
 
 # 登录plogin
-async def plogin(ua, cookie):
+async def plogin(ua,cookie):
     now = get_time()
-    url = f'https://plogin.m.jd.com/cgi-bin/ml/islogin?time={now}&callback=__jsonp{now - 2}&_={now + 2}'
+    url = f'https://plogin.m.jd.com/cgi-bin/ml/islogin?time={now}&callback=__jsonp{now-2}&_={now+2}'
     header = {
-        'Accept': '*/*',
+        'Accept':'*/*',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh-Hans;q=0.9',
         'Connection': 'keep-alive',
         'Cookie': cookie,
         'Host': 'plogin.m.jd.com',
         'Referer': 'https://prodev.m.jd.com/',
-        'User-Agent': ua
+        'User-Agent':ua
     }
-    response = requests.get(url=url, headers=header, timeout=None).text
+    response = requests.get(url=url,headers=header,timeout=30).text
     return response
 
 # 活动接口
-async def jdjoy(ua, cookie):
+async def jdjoy(ua,cookie):
+
     url = f'https://jdjoy.jd.com/member/bring/getActivityPage?code={authorCode}&invitePin={invitePin}&_t={get_time()}'
     header = {
-        'Accept': '*/*',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'zh-Hans-US;q=1,en-US;q=0.9',
-        'Connection': 'keep-alive',
-        'Content-Type': 'application/json',
-        'Cookie': cookie,
-        "Host": 'jdjoy.jd.com',
-        'Origin': 'https://prodev.m.jd.com',
-        "Referer": 'https://prodev.m.jd.com/',
-        'User-Agent': ua
+        'Accept':'*/*',
+        'Accept-Encoding':'gzip, deflate',
+        'Accept-Language':'zh-Hans-US;q=1,en-US;q=0.9',
+        'Connection':'keep-alive',
+        'Content-Type':'application/json',
+        'Cookie':cookie,
+        "Host":'jdjoy.jd.com',
+        'Origin':'https://prodev.m.jd.com',
+        "Referer":'https://prodev.m.jd.com/',
+        'User-Agent':ua
     }
-    response = requests.get(url=url, headers=header).text
+    response = requests.get(url=url,headers=header).text
     return json.loads(response)
-
+    
 # go开卡
-async def ruhui(ua, cookie):
+async def ruhui(ua,cookie):
     url = f'https://jdjoy.jd.com/member/bring/joinMember?code={authorCode}&invitePin={invitePin}'
     header = {
         'Host': 'jdjoy.jd.com',
@@ -139,13 +132,13 @@ async def ruhui(ua, cookie):
         'Accept-Language': 'zh-cn',
         'request-from': 'native'
     }
-    response = requests.get(url=url, headers=header).text
+    response = requests.get(url=url,headers=header).text
     return json.loads(response)
 
 # 检查开卡状态
-async def check_ruhui(body, cookie, venderId, ua):
+async def check_ruhui(body,cookie,venderId,ua):
     url = f'https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=getShopOpenCardInfo&body={json.dumps(body)}&client=H5&clientVersion=9.2.0&uuid=88888'
-    headers = {
+    headers =  {
         'Host': 'api.m.jd.com',
         'Accept': '*/*',
         'Connection': 'keep-alive',
@@ -155,58 +148,59 @@ async def check_ruhui(body, cookie, venderId, ua):
         'Referer': f'https://shopmember.m.jd.com/shopcard/?venderId={venderId}&channel=801&returnUrl={json.dumps(activityUrl)}',
         'Accept-Encoding': 'gzip, deflate'
     }
-    response = requests.get(url=url, headers=headers, timeout=None).text
+    response = requests.get(url=url,headers=headers,timeout=30000).text
     return json.loads(response)
 
 # 领取奖励
-async def getInviteReward(cookie, ua, number):
+async def getInviteReward(cookie,ua,number):
     url = f'https://jdjoy.jd.com/member/bring/getInviteReward?code={authorCode}&stage={number}'
     header = {
-        'Accept': '*/*',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'zh-Hans-US;q=1,en-US;q=0.9',
-        'Connection': 'keep-alive',
-        'Content-Type': 'application/json',
-        'Cookie': cookie,
-        "Host": 'jdjoy.jd.com',
-        'Origin': 'https://prodev.m.jd.com',
-        "Referer": 'https://prodev.m.jd.com/',
-        'User-Agent': ua
-    }
-    response = requests.get(url=url, headers=header).text
+        'Accept':'*/*',
+        'Accept-Encoding':'gzip, deflate',
+        'Accept-Language':'zh-Hans-US;q=1,en-US;q=0.9',
+        'Connection':'keep-alive',
+        'Content-Type':'application/json',
+        'Cookie':cookie,
+        "Host":'jdjoy.jd.com',
+        'Origin':'https://prodev.m.jd.com',
+        "Referer":'https://prodev.m.jd.com/',
+        'User-Agent':ua
+}
+    response = requests.get(url=url,headers=header).text
     return json.loads(response)
 
 # 开启活动
-async def firstInvite(cookie, ua):
+async def firstInvite(cookie,ua):
     url = f'https://jdjoy.jd.com/member/bring/firstInvite?code={authorCode}'
     header = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'zh-Hans-US;q=1,en-US;q=0.9',
-        'Connection': 'keep-alive',
-        'Cookie': cookie,
-        "Host": 'jdjoy.jd.com',
-        'User-Agent': ua
-    }
-    response = requests.get(url=url, headers=header).text
+        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Encoding':'gzip, deflate',
+        'Accept-Language':'zh-Hans-US;q=1,en-US;q=0.9',
+        'Connection':'keep-alive',
+        'Cookie':cookie,
+        "Host":'jdjoy.jd.com',
+        'User-Agent':ua
+}
+    response = requests.get(url=url,headers=header).text
     print(response)
     return json.loads(response)
 
 async def get_ck(data):
     cklist = []
-    if data['code'] != 200:
-        return {'code': 0, 'data': data}
+    if data['code']!=200:
+        return {'code': 0, 'data':data}
     else:
         env_data = data['data']
         for ck in env_data:
-            if 'remarks' in ck and ck['name'] == 'JD_COOKIE':
-                cklist.append(ck['value'])
+            if 'remarks' in ck and ck['name']=='JD_COOKIE':
+                    cklist.append(ck['value'])
             else:
                 pass
     return cklist
 
+
 # 检查pin
-def checkpin(cks: list, pin):
+def checkpin(cks:list,pin):
     for ck in cks:
         if pin in ck:
             return ck
@@ -216,57 +210,52 @@ def checkpin(cks: list, pin):
 # 主程序
 async def main():
     try:
-        cks = getCk
-        if not cks:
-            return
+        cks = os.environ["JD_COOKIE"].split("&")
     except:
-        print("未获取到有效COOKIE,退出程序！")
-        return
-    success = 0  # 计算成功数
-    global invitePin, activityUrl
-    r = re.compile(r"pt_pin=(.*?);")
-    invitePin = r.findall(cks[0])[0] # 获取COOKIES中第一个车头pin
-    activityUrl = f'https://prodev.m.jd.com/mall/active/{activityId}/index.html?code={authorCode}&invitePin={invitePin}'  # 活动链接
-    inveteck = checkpin(cks, invitePin)  # 根据设定的pin返回对应ck
-    needinviteNum = []  # 需要助力次数
+        with open('cklist1.txt','r') as f:
+            cks  = f.read().split('\n')
+    success = 0   # 计算成功数
+    inveteck = checkpin(cks,invitePin)  # 根据设定的pin返回对应ck
+    needinviteNum = [] # 需要助力次数
     needdel = []
     need = []
     if inveteck:
-        print(f'🔔开始{activatyname}任务', flush=True)
-        print(f"若已加入活动店铺会员,则无法助力。\n入口:\n{activityUrl}\n")
-        print(f'您好！{invitePin}，正在获取您的活动信息', )
+        print(f'🔔{activatyname}', flush=True)
+        print(f'==================共{len(cks)}个京东账号Cookie==================')
+        print(f'==================脚本执行- 北京时间(UTC+8)：{get_time()}=====================\n')
+        print(f'您好！{invitePin}，正在获取您的活动信息',)
         ua = randomuserAgent()  # 获取ua
-        result = await check(ua, inveteck)  # 检测ck
+        result = await check(ua, inveteck) # 检测ck
         if result['code'] == 200:
-            await plogin(ua, inveteck)  # 获取登录状态
+            await plogin(ua,inveteck) # 获取登录状态
             await asyncio.sleep(2)
-            result = await jdjoy(ua, inveteck)  # 获取活动信息
-            await firstInvite(inveteck, ua)  # 开启活动
+            result = await jdjoy(ua,inveteck) # 获取活动信息
+            await firstInvite(inveteck,ua) # 开启活动
             if result['success']:
                 brandName = result['data']['brandName']  # 店铺名字
                 venderId = result['data']['venderId']  # 店铺入会id
-                rewardslist = []  # 奖品
-                successCount = result['data']['successCount']  # 当前成功数
+                rewardslist =[] # 奖品
+                successCount = result['data']['successCount'] # 当前成功数
                 success += successCount
-                result_data = result['data']['rewards']  # 奖品数据
-                print(f'您好！账号[{invitePin}]，开启{brandName}邀请好友活动\n去开活动')
+                result_data = result['data']['rewards'] # 奖品数据
+                print(f'您好！账号[{invitePin}]，开启{brandName}邀请好友活动\n去开活动') 
                 for i in result_data:
                     stage = i['stage']
                     inviteNum = i['inviteNum']  # 单次需要拉新人数
-                    need.append(inviteNum)
-                    rewardName = i['rewardName']  # 奖品名
+                    need.append(inviteNum) 
+                    rewardName = i['rewardName'] # 奖品名
                     rewardNum = i['rewardStock']
-                    if rewardNum != 0:
-                        needinviteNum.append(inviteNum)
+                    if rewardNum !=0:
+                        needinviteNum.append(inviteNum) 
                         needdel.append(inviteNum)
                     rewardslist.append(f'级别{stage}:  需助力{inviteNum}人，奖品: {rewardName}，库存：{rewardNum}件\n')
-                if len(rewardslist) != 0:
-                    print('当前活动奖品如下: \n' + str('\n'.join(rewardslist)) + f'\n当前已助力{successCount}次\n')
+                if len(rewardslist)!=0:
+                    print('当前活动奖品如下: \n'+str('\n'.join(rewardslist))+f'\n当前已助力{successCount}次\n')
                     for nmubers in needdel:
                         if success >= nmubers:
                             print("您当前助力已经满足了，可以去领奖励了")
-                            print(f'\n这就去领取奖励{need.index(nmubers) + 1}')
-                            result = await getInviteReward(inveteck, ua, need.index(nmubers) + 1)
+                            print(f'\n这就去领取奖励{need.index(nmubers)+1}')
+                            result = await getInviteReward(inveteck,ua,need.index(nmubers)+1)
                             print(result)
                             needinviteNum.remove(nmubers)
                             await asyncio.sleep(10)
@@ -274,21 +263,21 @@ async def main():
                     if needinviteNum == []:
                         print('奖励已经全部获取啦，退出程序')
                         return
-                for n, ck in enumerate(cks, 1):
+                for n,ck in enumerate(cks,1):
                     ua = randomuserAgent()  # 获取ua
                     try:
-                        pin = re.findall(r'(pt_pin=([^; ]+)(?=;))', str(ck))[0]
+                        pin = re.findall(r'(pt_pin=([^; ]+)(?=;))',str(ck))[0]
                         pin = (unquote_plus(pin[1]))
                     except IndexError:
                         pin = f'用户{n}'
                     print(f'******开始【京东账号{n}】{pin} *********\n')
-                    for n, nmubers in enumerate(needinviteNum, 1):
+                    for n,nmubers in enumerate(needinviteNum,1):
                         for nmubers in needdel:
                             if success >= nmubers:
                                 print(nmubers)
                                 print("您当前助力已经满足了，可以去领奖励了")
-                                print(f'\n这就去领取奖励{need.index(nmubers) + 1}')
-                                result = await getInviteReward(inveteck, ua, need.index(nmubers) + 1)
+                                print(f'\n这就去领取奖励{need.index(nmubers)+1}')
+                                result = await getInviteReward(inveteck,ua,need.index(nmubers)+1)
                                 print(result)
                                 needinviteNum.remove(nmubers)
                                 await asyncio.sleep(10)
@@ -296,25 +285,24 @@ async def main():
                         if needinviteNum == []:
                             print('奖励已经全部获取啦，退出程序')
                             return
-                    await plogin(ua, ck)  # 获取登录状态
-                    result = await check(ua, ck)  # 检测ck
+                    await plogin(ua,ck) # 获取登录状态 
+                    result = await check(ua, ck) # 检测ck
                     if result['code'] == 200:
-                        result = await jdjoy(ua, ck)  # 调用ck
+                        result = await jdjoy(ua,ck) # 调用ck
                         if result['success']:
                             print(f'账户[{pin}]已开启{brandName}邀请好友活动\n')
                             await asyncio.sleep(3)
-                            result = await check_ruhui({"venderId": str(venderId), "channel": "401"}, ck, venderId,
-                                                       ua)  # 检查入会状态
+                            result= await check_ruhui({"venderId":str(venderId), "channel": "401" },ck,venderId,ua) # 检查入会状态
                             try:
-                                if result['result']['userInfo']['openCardStatus'] == 0:  # 0 未开卡
+                                if result['result']['userInfo']['openCardStatus']==0: # 0 未开卡
                                     await asyncio.sleep(2)
                                     print(f'您还不是会员哦，这就去去助力{invitePin}\n')
-                                    result = await ruhui(ua, ck)
+                                    result = await ruhui(ua,ck)
                                     if result['success']:
-                                        success += 1
+                                        success +=1
                                         print(f'助力成功! 当前成功助力{success}个\n')
                                     if '交易失败' in str(result):
-                                        success += 1
+                                        success +=1
                                         print(f'助力成功! 当前成功助力{success}个\n')
                                     else:
                                         print(result)
@@ -325,18 +313,18 @@ async def main():
 
                             except TypeError as e:
                                 print(e)
-                                result = await ruhui(ua, ck)
+                                result = await ruhui(ua,ck)
                                 if result['success']:
-                                    success += 1
+                                    success +=1
                                     print(f'助力成功! 当前成功助力{success}个\n')
                                 if '交易失败' in result:
-                                    success += 1
+                                    success +=1
                                     print(f'助力成功! 当前成功助力{success}个\n')
                                 else:
                                     print(result['errorMessage'])
                                 await asyncio.sleep(2)
 
-                        else:  # 没有获取到活动信息
+                        else: # 没有获取到活动信息
                             print('未获取到活动参数信息\n')
                             break
                     else:
@@ -351,7 +339,5 @@ async def main():
             return
     else:
         print(f'pin填写有误，请重试')
-
-
 if __name__ == "__main__":
     asyncio.run(main())
