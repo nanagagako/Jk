@@ -1,6 +1,5 @@
 /*
 https://lzkj-isv.isvjcloud.com/wxgame/activity/8530275?activityId=e5cff304b4b545a98ba6130ceb4027d2
-爆裂豆豆游戏
 活动ID环境变量 export WXGAME_ACT_ID=""
 
 1 1 1 1 * jd_dadoudou.js, tag=M店铺游戏, enabled=true
@@ -10,7 +9,7 @@ https://lzkj-isv.isvjcloud.com/wxgame/activity/8530275?activityId=e5cff304b4b545
 脚本加密!!!介意别跑!!!
 脚本加密!!!介意别跑!!!
 */
-const $ = new Env('MMM店铺游戏');
+const $ = new Env('M店铺游戏');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
